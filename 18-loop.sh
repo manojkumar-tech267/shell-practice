@@ -50,4 +50,5 @@ do
         fi 
     else 
         echo "$package is already installed we are nothing to do" | tee -a $LOG_FILE 
-    fi 
+    fi
+done 
