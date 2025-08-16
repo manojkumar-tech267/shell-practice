@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 userid=$(id -u)
 
@@ -10,4 +10,18 @@ else
     echo "You are running with root access"
 fi 
 
-echo $? 
+dnf list installed mysql 
+if [ $? -ne 0 ]
+then 
+    echo "MySql is not installed going to install it"
+    dnf install mysql -y 
+    if [ $? -eq 0 ]
+    then 
+        echo "Installing mysql is success"
+    else 
+        echo "Installing MySql is failed" 
+        exit 1
+    fi 
+else 
+    echo "MySql is already installed... Nothing todo"
+fi 
