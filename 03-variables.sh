@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-Person1="Manoj"
+Person1="Raju"
 Person2="Siva"
 
 
