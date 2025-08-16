@@ -8,4 +8,5 @@ then
     exit 1 
 else 
     echo "You are running with root user access"
+fi 
 echo $? 
