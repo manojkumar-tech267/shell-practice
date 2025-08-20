@@ -11,16 +11,16 @@ then
     echo -e "$R You are not a root user run with root access $N"
     exit 1 
 else 
-    echo "$G you are a root user $N"
+    echo -e "$G you are a root user $N"
 fi 
 
 VALIDATE()
 {
     if [$1 -eq 0 ]
     then 
-        echo "$G $2 installed successfully $N"
+        echo -e "$G $2 installed successfully $N"
     else 
-        echo "$R $2 not installed successfully $N" 
+        echo -e "$R $2 not installed successfully $N" 
         exit 1 
     fi 
 }
@@ -28,19 +28,19 @@ VALIDATE()
 dnf list installed mysql
 if [ $? -ne 0 ]
 then 
-    echo "$R Mysql is not there in our system we are going to install $N"
+    echo -e "$R Mysql is not there in our system we are going to install $N"
     dnf install mysql -y 
     VALIDATE $? "MySQL" 
 else 
-    echo "$Y MySQL is already there we are going to skip!!! $N"
+    echo -e "$Y MySQL is already there we are going to skip!!! $N"
 fi 
 
 dnf list installed nginx 
 if [ $? -ne 0 ]
 then 
-    echo "$R Nginx is not there in our system we are going to install!!! $N"
+    echo -e "$R Nginx is not there in our system we are going to install!!! $N"
     dnf install nginx -y 
     VALIDATE $? "Nginx" 
 else 
-    echo "$Y Nginx is already there we are going to skip!!! $N" 
+    echo -e "$Y Nginx is already there we are going to skip!!! $N" 
 fi 
