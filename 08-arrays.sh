@@ -1,7 +1,7 @@
 #!/bin/bash 
 
-Movies=("Ragada" "Coolie" "War2" "Mass Jathara")
+movies=("RRR" "Devara" "War2" "Dragon")
 
-echo "${Movies[0]}"
-echo "${Movies[1]}"
-echo "${Movies[@]}"
+echo "${movies[1]}"
+echo "${movies[2]}"
+echo "${movies[@]}"

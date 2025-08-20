@@ -1,10 +1,10 @@
 #!/bin/bash 
 
-# This line prints current date and time 
-timestamp=$(date) 
-
+timestamp=$(date)
+date=$(date +%F)
 Number1=100
 Number2=200
 
-echo "Today's date is ${timestamp}"   
-echo "Addition is $((Number1+Number2))" 
+echo "$timestamp"
+echo "$date" 
+echo "$((Number1+Number2))"

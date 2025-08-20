@@ -1,11 +1,14 @@
 #!/bin/bash 
 
-read num1;
-read num2;
+read Number1
+read Number2
 
-addition=$((num1+num2))
-subtraction=$((num1-num2))
-multiplication=$((num1*num2))
-division=$((num1/num2))
+addition=$((Number1+Number2))
+subtraction=$((Number1-Number2))
+multiplication=$((Number1*Number2))
+division=$((Number1/Number2))
 
-echo "${addition}, ${subtraction}, ${multiplication}, ${division}"
+echo "Addition is $addition"
+echo "Subtraction is $subtraction"
+echo "Multiplication is $multiplication"
+echo "Division is $division"

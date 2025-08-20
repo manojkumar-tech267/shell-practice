@@ -1,8 +1,9 @@
 #!/bin/bash 
-echo "Hi Manoj!! How are you?"
-echo "Hello siva Thanku for asking about me"
-echo "How is your devops Learning Manoj"
-echo "Yeah siva going good your teaching style is very easy"
-echo "Thank you Manoj Thanks for your Feedback!!!"
-echo "All the best for your future"
+
+echo "Hi Manoj How are you?"
+echo "Thanks for Asking me Shiva I'm good"
+echo "How are you?"
+echo "I'm good Manoj How is your devops Learning"
+echo "Yeah going good Siva your teaching style is amazing"
+echo "Thanks for your feedback Manoj All the Best!!"
 echo "Thank you Siva"
