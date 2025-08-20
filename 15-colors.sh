@@ -1,58 +1,46 @@
 #!/bin/bash 
 
-userid=$(id -u);
-
+userid=$(id -u)
 R="\e[31m"
 G="\e[32m"
-Y="\e[33m" 
-N="\e[0m" 
+Y="\e[33m"
+N="\e[0m"
 
 if [ $userid -ne 0 ]
 then 
-    echo -e "$Y Please!!!$N run with root access" 
+    echo -e "$R You are not a root user run with root access $N"
     exit 1 
 else 
-    echo -e "$G You Are running with root access $N"
+    echo "$G you are a root user $N"
 fi 
 
 VALIDATE()
 {
-    if [ $1 -eq 0 ]
+    if [$1 -eq 0 ]
     then 
-        echo -e "$G $2 installed Properly $N"
+        echo "$G $2 installed successfully $N"
     else 
-        echo -e "$R $2 Not installed properly $N"
-        exit 1
+        echo "$R $2 not installed successfully $N" 
+        exit 1 
     fi 
 }
 
-dnf list installed mysql 
+dnf list installed mysql
 if [ $? -ne 0 ]
 then 
-    echo -e "$Y MySql is installing!!!! $N"
-    dnf install mysql -y
-    VALIDATE $? "MySql" 
+    echo "$R Mysql is not there in our system we are going to install $N"
+    dnf install mysql -y 
+    VALIDATE $? "MySQL" 
 else 
-    echo -e "$G MySql is already there no need to do anything!!! $N"
+    echo "$Y MySQL is already there we are going to skip!!! $N"
 fi 
 
 dnf list installed nginx 
 if [ $? -ne 0 ]
 then 
-    echo -e "$Y Nginx is not there in your system we are going to install $N"
+    echo "$R Nginx is not there in our system we are going to install!!! $N"
     dnf install nginx -y 
     VALIDATE $? "Nginx" 
 else 
-    echo -e "$G Nginx is already there in your system we are not going to do anything"
+    echo "$Y Nginx is already there we are going to skip!!! $N" 
 fi 
-
-dnf list installed python3 
-if [ $? -ne 0 ]
-then 
-    echo -e "$Y Python3 is not there in your system we are going to install $N" 
-    dnf install python3 -y 
-    VALIDATE $? "Python3" 
-else 
-    echo -e "$G Python3 is already there in your system we are nothing to do $N"
-fi 
-
