@@ -1,5 +1,12 @@
 #!/bin/bash 
 
-echo -e "\e[31m Hello world \e[0m"
-echo -e "\e[32m Hello World \e[0m"
-echo "Hello World No Colors" 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m" 
+
+echo -e "$Y Hello World $N"
+echo -e "$G Hiii Manoj $N"
+echo -e "$G I am learning devops from joindevops It is excellent platform to learn devops $N"
+
+
+
