@@ -3,25 +3,25 @@
 userid=$(id -u)
 if [ $userid -ne 0 ]
 then 
-    echo "You are not a root user please run with root access" 
+    echo "[ERROR] You are not running as root. Please execute this script with root privileges." 
     exit 1
 else 
-    echo "You are running with root user access"
+    echo "[INFO] Root access confirmed. Proceeding with MySQL installation check."
 fi
 
 dnf list installed mysql
 if [ $? -ne 0 ]
 then 
-    echo "Mysql is not installed we are going to install!!!"
+    echo "[INFO] MySQL is not installed. Starting installation..."
     dnf install mysql -y 
     if [ $? -eq 0 ]
     then 
-        echo "Mysql installed successfully"
+        echo "[SUCCESS] MySQL has been installed successfully."
     else 
-        echo "Mysql installation failed" 
+        echo "[FAILURE] MySQL installation failed. Please check your package manager and network connection." 
         exit 1 
     fi 
 else 
-    echo "Mysql is already there we are nothing to do!!!"
+    echo "[INFO] MySQL is already installed. No further action is required."
 fi 
 
