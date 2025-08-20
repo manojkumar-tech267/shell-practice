@@ -4,19 +4,19 @@ userid=$(id -u)
 
 if [ $userid -ne 0 ]
 then 
-    echo "Please run with root access!!!"
+    echo "Error: This script must be run as root. Please use sudo or switch to the root user."
     exit 1 
 else 
-    echo "You are a root user" 
+    echo "Root access confirmed. Proceeding with installation checks."
 fi  
 
 validate()
 {
     if [ $1 -eq 0 ]
     then 
-        echo "$2 is installed successfully!!!"
+        echo "Success: $2 has been installed successfully."
     else 
-        echo "$2 not installed successfully!!!"
+        echo "Error: $2 installation failed. Please check your package manager and network connection."
         exit 1 
     fi 
 }
@@ -24,29 +24,29 @@ validate()
 dnf list installed mysql 
 if [ $? -ne 0 ]
 then 
-    echo "Mysql is not installed we are going to install!!!" 
+    echo "MySQL is not installed. Starting installation now."
     dnf install mysql -y 
     validate $? "MYSQL"
 else 
-    echo "MySQL is already installed we are skipping"
+    echo "MySQL is already installed. No action needed."
 fi 
 
 dnf list installed nginx 
 if [ $? -ne 0 ]
 then 
-    echo "Nginx is not installed we are going to install!!!" 
+    echo "Nginx is not installed. Starting installation now."
     dnf install nginx -y 
     validate $? "Nginx" 
 else 
-    echo "Nginx is already installed we are skipping!!!" 
+    echo "Nginx is already installed. No action needed."
 fi 
 
 dnf list installed python3
 if [ $? -ne 0 ]
 then 
-    echo "Python3 is not there we are going to install!!!" 
+    echo "Python3 is not installed. Starting installation now."
     dnf install python3 
     validate $? "Python3"
 else 
-    echo "Python3 is already there we are going to skip!!!" 
+    echo "Python3 is already installed. No action needed."
 fi 
