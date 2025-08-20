@@ -4,25 +4,25 @@ userid=$(id -u)
 
 if [ $userid -ne 0 ]
 then 
-    echo "Please!!! run with root access you are not a root user"
+    echo "Error: This script must be run as root. Please use sudo or switch to the root user."
     exit 1 
 else 
-    echo "You are a root user!!"
+    echo "Root access confirmed. Checking Nginx installation status..."
 fi 
 
 dnf list installed nginx 
 
 if [ $? -ne 0 ]
 then 
-    echo "Nginx is not installed we are going to install!!!"
+    echo "Nginx is not installed. Starting installation now."
     dnf install nginx -y 
     if [ $? -eq 0 ]
     then 
-        echo "Nginx installed successfully"
+        echo "Success: Nginx has been installed successfully."
     else 
-        echo "Nginx is not installed successfully!!!"
+        echo "Error: Nginx installation failed. Please check your package manager and network connection."
         exit 1 
     fi 
 else 
-    echo "Nginx is already installed we are skipping!!!!"
+    echo "Nginx is already installed. No action needed."
 fi 
