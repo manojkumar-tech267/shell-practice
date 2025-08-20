@@ -1,56 +1,52 @@
-#!/bin/bash 
+#!/bin/bash
 
 userid=$(id -u)
 
 if [ $userid -ne 0 ]
 then 
-    echo "Please run with root access"
+    echo "Please run with root access!!!"
     exit 1 
 else 
-    echo "you are running with root access"
-fi 
+    echo "You are a root user" 
+fi  
 
-VALIDATE()
+validate()
 {
     if [ $1 -eq 0 ]
     then 
-        echo "$2 installed Successfully!!!" 
+        echo "$2 is installed successfully!!!"
     else 
-        echo "$2 is not installed Successfully!!!"
-        exit 1
+        echo "$2 not installed successfully!!!"
+        exit 1 
     fi 
 }
-
 
 dnf list installed mysql 
 if [ $? -ne 0 ]
 then 
-    echo "MYsql is not installed we are going to install!!!"
+    echo "Mysql is not installed we are going to install!!!" 
     dnf install mysql -y 
-    VALIDATE $? "MySql" 
+    validate $? "MYSQL"
 else 
-    echo "MySql is already installed we are nothing to do!!!"
+    echo "MySQL is already installed we are skipping"
 fi 
 
 dnf list installed nginx 
-if [ $? -ne 0 ] 
+if [ $? -ne 0 ]
 then 
     echo "Nginx is not installed we are going to install!!!" 
     dnf install nginx -y 
-    VALIDATE $? "Nginx" 
+    validate $? "Nginx" 
 else 
-    echo "Nginx is already installed we are nothing to do!!!" 
+    echo "Nginx is already installed we are skipping!!!" 
 fi 
 
-dnf list installed python3 
+dnf list installed python3
 if [ $? -ne 0 ]
 then 
-    echo "Python3 is not installed we are going to install!!!" 
-    dnf install python3 -y 
-    VALIDATE $? "Python3" 
+    echo "Python3 is not there we are going to install!!!" 
+    dnf install python3 
+    validate $? "Python3"
 else 
-    echo "Python3 is already installed we are nothing to do!!!"
+    echo "Python3 is already there we are going to skip!!!" 
 fi 
-
-
-
