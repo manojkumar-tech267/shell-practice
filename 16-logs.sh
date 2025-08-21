@@ -4,63 +4,52 @@ userid=$(id -u);
 
 R="\e[31m"
 G="\e[32m"
-Y="\e[33m" 
-N="\e[0m" 
-
+Y="\e[33m"
+N="\e[0m"
 
 LOGS_FOLDER="/var/log/shellscript-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOGS_FOLDER
-echo "Script started executing at:  $(date)" | tee -a $LOG_FILE 
+echo -e "$Y Script started executing at $(date) $N" | tee -a $LOG_FILE 
 
-if [ $userid -ne 0 ]
+if [ $userid -ne 0 ] 
 then 
-    echo -e "$Y Please!!!$N run with root access" | tee -a  $LOG_FILE 
+    echo -e "$R Error: This script must be run as root. Please use sudo or switch to the root user. $N" | tee -a $LOG_FILE 
     exit 1 
 else 
-    echo -e "$G You Are running with root access $N" &>> $LOG_FILE | tee -a $LOG_FILE   
+    echo -e "$G Root access confirmed. Proceeding with installation checks. $N" | tee -a $LOG_FILE 
 fi 
 
 VALIDATE()
 {
     if [ $1 -eq 0 ]
     then 
-        echo -e "$G $2 installed Properly $N" | tee -a $LOG_FILE  
+        echo -e "$G Success: $2 has been installed successfully. $N" | tee -a $LOG_FILE 
     else 
-        echo -e "$R $2 Not installed properly $N" | tee -a $LOG_FILE 
-        exit 1
+        echo -e "$R Error: $2 installation failed. Please check your package manager and network connection. $N" | tee -a $LOG_FILE 
+        exit 1 
     fi 
 }
 
-dnf list installed mysql &>> $LOG_FILE
+dnf list installed mysql &>> $LOG_FILE 
 if [ $? -ne 0 ]
 then 
-    echo -e "$Y MySql is installing!!!! $N" | tee -a $LOG_FILE 
-    dnf install mysql -y &>> $LOG_FILE 
-    VALIDATE $? "MySql" 
+    echo -e "$Y MySQL is not installed. Starting installation now. $N" | tee -a $LOG_FILE 
+    dnf install mysql -y &>> $LOG_FILE
+    VALIDATE $? "MySQL" 
 else 
-    echo -e "$G MySql is already there no need to do anything!!! $N" | tee -a $LOG_FILE 
-fi 
+    echo -e "$G MySQL is already installed. No action needed. $N" | tee -a $LOG_FILE 
 
 dnf list installed nginx &>> $LOG_FILE 
 if [ $? -ne 0 ]
 then 
-    echo -e "$Y Nginx is not there in your system we are going to install $N" | tee -a $LOG_FILE 
+    echo -e "$Y Nginx is not installed. Starting installation now. $N" | tee -a $LOG_FILE 
     dnf install nginx -y &>> $LOG_FILE
     VALIDATE $? "Nginx" 
 else 
-    echo -e "$G Nginx is already there in your system we are not going to do anything" | tee -a $LOG_FILE 
+    echo -e "$G Nginx is already installed. No action needed. $N" | tee -a $LOG_FILE  
 fi 
 
-dnf list installed python3 &>> $LOG_FILE 
-if [ $? -ne 0 ]
-then 
-    echo -e "$Y Python3 is not there in your system we are going to install $N" | tee -a $LOG_FILE 
-    dnf install python3 -y &>> $LOG_FILE 
-    VALIDATE $? "Python3" 
-else 
-    echo -e "$G Python3 is already there in your system we are nothing to do $N" | tee -a $LOG_FILE 
-fi 
 
