@@ -29,6 +29,7 @@ VALIDATE()
     else 
         echo "$2 not executed successfully"
         exit 1 
+    fi 
 }
 
 for i in $@ 
