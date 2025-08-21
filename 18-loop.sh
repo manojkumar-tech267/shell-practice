@@ -1,54 +1,48 @@
-#!/bin/bash 
+#!/bin/bash
 
-userid=$(id -u);
+userid=$(id -u)
 
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m" 
-N="\e[0m" 
+ R="\e[31m" 
+ G="\e[32m"
+ Y="\e[33m"
+ N="\e[0m" 
 
-packages=("mysql" "nginx" "python3")
+ LOGS_FOLDER="/var/log/shellscript-logs"
+ SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
+ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" 
 
-LOGS_FOLDER="/var/log/shellscript-logs"
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+ mkdir -p $LOGS_FOLDER 
+ echo "Script started executing at $(date)" 
 
-mkdir -p $LOGS_FOLDER
-echo "Script started executing at:  $(date)" | tee -a $LOG_FILE 
-
-if [ $userid -ne 0 ]
-then 
-    echo -e "$Y Please!!!$N run with root access" | tee -a  $LOG_FILE 
+ if [ $userid -ne 0 ]
+ then 
+    echo "You are not a root user login with root access!!!" 
     exit 1 
 else 
-    echo -e "$G You Are running with root access $N" &>> $LOG_FILE | tee -a $LOG_FILE   
-fi 
+    echo "You are a root user"
+
+
+
 
 VALIDATE()
 {
     if [ $1 -eq 0 ]
     then 
-        echo -e "$G $2 installed Properly $N" | tee -a $LOG_FILE  
+        echo "$2 executed successfully!!!"
     else 
-        echo -e "$R $2 Not installed properly $N" | tee -a $LOG_FILE 
-        exit 1
-    fi 
+        echo "$2 not executed successfully"
+        exit 1 
 }
 
-for package in ${packages[@]}
+for i in $@ 
 do 
-    dnf list installed $package &>> $LOG_FILE
+    dnf list installed  $i 
     if [ $? -ne 0 ]
     then 
-        echo "$package not installed now we are going to install" | tee -a $LOG_FILE 
-        dnf install $package -y &>> $LOG_FILE 
-        if [ $? eq 0 ]
-        then 
-            echo "$package installed successfully" | tee -a $LOG_FILE 
-        else 
-            echo "$package not installed successfully" | tee -a $LOG_FILE 
-        fi 
+        echo "$i is not there we are going to install"
+        dnf install $i -y 
+        VALIDATE $? $i 
     else 
-        echo "$package is already installed we are nothing to do" | tee -a $LOG_FILE 
-    fi
+        echo "$i already there we are skipping"
+    fi 
 done 
