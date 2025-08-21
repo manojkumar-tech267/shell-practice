@@ -12,36 +12,36 @@ userid=$(id -u)
  LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" 
 
  mkdir -p $LOGS_FOLDER 
- echo "Script started executing at $(date)" 
+ echo -e "$Y Script started executing at $(date) $N" | tee -a $LOG_FILE
 
  if [ $userid -ne 0 ]
  then 
-    echo "You are not a root user login with root access!!!" 
+    echo -e "$R Error: This script must be run as root. Please use sudo or switch to the root user. $N" | tee -a $LOG_FILE
     exit 1 
  else 
-    echo "You are a root user"
+    echo -e "$G Root access confirmed. Proceeding with package checks. $N" | tee -a $LOG_FILE
 fi 
 
 VALIDATE()
 {
     if [ $1 -eq 0 ]
     then 
-        echo "$2 executed successfully!!!"
+        echo -e "$G Installing: $2  Success $N" | tee -a $LOG_FILE
     else 
-        echo "$2 not executed successfully"
+        echo -e "$R Installing $2 Failure. $N" | tee -a $LOG_FILE
         exit 1 
     fi 
 }
 
 for i in $@ 
 do 
-    dnf list installed  $i 
+    dnf list installed $i &>> $LOG_FILE
     if [ $? -ne 0 ]
     then 
-        echo "$i is not there we are going to install"
-        dnf install $i -y 
-        VALIDATE $? $i 
+        echo -e "$Y $i is not installed. Installing now. $N" | tee -a $LOG_FILE
+        dnf install $i -y &>> $LOG_FILE
+        VALIDATE $? $i
     else 
-        echo "$i already there we are skipping"
-    fi 
+        echo -e "$G $i is already installed. No action needed. $N" | tee -a $LOG_FILE
+    fi
 done
