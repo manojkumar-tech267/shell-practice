@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 userid=$(id -u);
 
@@ -17,7 +17,7 @@ echo -e "$Y Script started executing at $(date) $N" | tee -a $LOG_FILE
 if [ $userid -ne 0 ] 
 then 
     echo -e "$R Error: This script must be run as root. Please use sudo or switch to the root user. $N" | tee -a $LOG_FILE 
-    exit 1 
+    exit 1
 else 
     echo -e "$G Root access confirmed. Proceeding with installation checks. $N" | tee -a $LOG_FILE 
 fi 
@@ -50,6 +50,4 @@ then
     VALIDATE $? "Nginx" 
 else 
     echo -e "$G Nginx is already installed. No action needed. $N" | tee -a $LOG_FILE  
-fi 
-
-
+fi
