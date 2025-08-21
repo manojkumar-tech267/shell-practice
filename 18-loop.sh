@@ -20,6 +20,7 @@ userid=$(id -u)
     exit 1 
  else 
     echo "You are a root user"
+fi 
 
 VALIDATE()
 {
@@ -43,4 +44,4 @@ do
     else 
         echo "$i already there we are skipping"
     fi 
-done 
+done
