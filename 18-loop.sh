@@ -18,11 +18,8 @@ userid=$(id -u)
  then 
     echo "You are not a root user login with root access!!!" 
     exit 1 
-else 
+ else 
     echo "You are a root user"
-
-
-
 
 VALIDATE()
 {
