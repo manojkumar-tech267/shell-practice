@@ -41,8 +41,10 @@ then
     VALIDATE $? "MySQL" 
 else 
     echo -e "$G MySQL is already installed. No action needed. $N" | tee -a $LOG_FILE 
+fi 
 
-dnf list installed nginx &>> $LOG_FILE 
+dnf list installed nginx &>> $LOG_FILE
+
 if [ $? -ne 0 ]
 then 
     echo -e "$Y Nginx is not installed. Starting installation now. $N" | tee -a $LOG_FILE 
